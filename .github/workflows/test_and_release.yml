@@ -45,7 +45,7 @@ jobs:
       - name: Publish package
         run: |
           poetry install
-          poetry version ${{ github.ref }}
+          poetry version ${{ github.event.release.tag_name }}
           poetry publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
 
   release:
