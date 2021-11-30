@@ -1,0 +1,16 @@
+[
+  {
+    "id": "94dbdb91-87ac-4634-b77d-e126a6206b15",
+    "external_reference": "ORD001",
+    "address": {
+      "street": "Nijverheidsweg"
+    }
+  },
+  {
+    "id": "46c621a9-8272-45f4-8f07-19b986ad22c0",
+    "external_reference": "ORD002",
+    "address": {
+      "street": "Nijverheidsweg"
+    }
+  }
+]
