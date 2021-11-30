@@ -46,7 +46,7 @@ jobs:
         run: |
           poetry install
           poetry version ${{ github.event.release.tag_name }}
-          poetry publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
+          poetry publish --build --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
 
   release:
     name: Create a new release on github
