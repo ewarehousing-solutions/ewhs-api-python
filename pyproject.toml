@@ -1,6 +1,5 @@
 [tool.poetry]
 name = "ewhs-api-python"
-version = "0.1.0"
 description = "Python library for the eWarehousing Solutions API."
 authors = ["Liam Boer <liamboer@outlook.com>"]
 
