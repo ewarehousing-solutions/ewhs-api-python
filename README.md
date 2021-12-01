@@ -12,7 +12,7 @@ language.
 ## Installation
 
 ```
-pip install <coming_soon>
+pip install ewhs-api-python
 ```
 
 ### Requirements
