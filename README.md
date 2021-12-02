@@ -60,7 +60,7 @@ poetry install
 Running tests
 
 ```shell
-poetry run pytests
+poetry run pytest
 ```
 
 # Support
