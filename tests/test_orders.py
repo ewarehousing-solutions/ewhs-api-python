@@ -1,11 +1,11 @@
 ORDER_ID = "94dbdb91-87ac-4634-b77d-e126a6206b15"
 
 
-def test_get_order(client, response):
+def test_get_order(authenticated_client, response):
     """Retrieve a single order by order ID."""
     response.get(f"https://api.ewarehousing.com/api/orders/{ORDER_ID}", "order_single")
 
-    order = client.order.get(ORDER_ID)
+    order = authenticated_client.order.get(ORDER_ID)
     assert isinstance(order, dict)
 
     assert order['id'] == ORDER_ID
@@ -15,11 +15,11 @@ def test_get_order(client, response):
     }
 
 
-def test_list_orders(client, response):
+def test_list_orders(authenticated_client, response):
     """Retrieve a list of orders"""
     response.get(f"https://api.ewarehousing.com/api/orders", "order_list")
 
-    orders = client.order.list()
+    orders = authenticated_client.order.list()
     assert isinstance(orders, list)
 
     assert len(orders) == 2
@@ -36,18 +36,18 @@ def test_list_orders(client, response):
     }
 
 
-def test_filer_orders(client, response):
+def test_filer_orders(authenticated_client, response):
     """Retrieve a list of orders"""
     response.get(f"https://api.ewarehousing.com/api/orders?status=created", "order_list")
 
-    orders = client.order.list(
+    orders = authenticated_client.order.list(
         params={'status': 'created'}
     )
 
     assert isinstance(orders, list)
 
 
-def test_create_order(client, response):
+def test_create_order(authenticated_client, response):
     """Create an order."""
     response.post(f"https://api.ewarehousing.com/api/orders", "order_single")
 
@@ -85,6 +85,6 @@ def test_create_order(client, response):
         "external_reference": "ORD001",
         "requested_delivery_date": "2018-11-19"
     }
-    order = client.order.create(data)
+    order = authenticated_client.order.create(data)
     assert isinstance(order, dict)
     assert order['id'] == ORDER_ID
