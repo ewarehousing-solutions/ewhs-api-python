@@ -4,6 +4,8 @@ This library provides convenient access to the eWarehousing Solutions API from a
 language.
 
 [![CI](https://github.com/ewarehousing-solutions/ewhs-api-python/actions/workflows/test_and_release.yml/badge.svg)](https://github.com/ewarehousing-solutions/ewhs-api-python/actions/workflows/test_and_release.yml)
+[![PyPI](https://img.shields.io/pypi/v/ewhs-api-python)](https://pypi.org/project/ewhs-api-python/)
+
 
 ## Documentation
 
