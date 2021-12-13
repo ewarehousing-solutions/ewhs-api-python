@@ -17,7 +17,7 @@ pip install ewhs-api-python
 
 ### Requirements
 
-- Python 3.6+
+- Python 3.7+
 
 ## Usage
 
