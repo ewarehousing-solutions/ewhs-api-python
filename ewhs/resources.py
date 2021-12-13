@@ -15,7 +15,8 @@ class CRUDResource(
     DetailResourceMixin,
     UpdateResourceMixin,
     CreateResourceMixin,
-    Resource):
+    Resource
+):
     pass
 
 
@@ -25,3 +26,7 @@ class Shipment(ListResourceMixin, DetailResourceMixin, Resource):
 
 class Order(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, UpdateResourceMixin, Resource):
     resource = 'orders'
+
+
+class Stock(ListResourceMixin, Resource):
+    resource = 'stock'

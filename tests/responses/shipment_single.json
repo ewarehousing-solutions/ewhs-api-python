@@ -1,0 +1,24 @@
+{
+  "id": "1701bf71-0b9a-4984-bee5-c9e83b7d2c1d",
+  "created_at": "2021-12-10T10:44:51+00:00",
+  "order_reference": "MW_ORD_001",
+  "reference": null,
+  "labels": [
+    {
+      "shipping_method": {
+        "id": "7e808ac8-4167-11e9-92f0-0242ac140006",
+        "name": "eWarehousing afhaal order"
+      },
+      "shipping_software": "ewh",
+      "tracking_code": "ewh-pick-up",
+      "tracking_url": "#",
+      "shipper": "eWarehousing"
+    }
+  ],
+  "shipment_lines": [
+    {
+      "variant": "f2894c16-399e-4ca1-9151-489775a6519c",
+      "quantity": 1
+    }
+  ]
+}

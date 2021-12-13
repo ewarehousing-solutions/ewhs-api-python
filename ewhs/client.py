@@ -1,11 +1,11 @@
 import platform
 import re
+import time
 from collections import OrderedDict
 
 from requests import Request, Session
-from requests.auth import HTTPBasicAuth
-from .resources import Order, Shipment
-from .exceptions import ServerError, BadRequest
+from .resources import Order, Shipment, Stock
+from .exceptions import ServerError, BadRequest, AuthenticationError
 
 
 class EwhsClient:
@@ -20,6 +20,9 @@ class EwhsClient:
         self.username = username
         self.password = password
         self.customer_id = customer_id
+        self.access_token = None
+        self.refresh_token = None
+        self.expires_at = 0
 
         self._url = api_url if api_url else self.API_URL
 
@@ -30,11 +33,12 @@ class EwhsClient:
         # initialize resources
         self.shipment = Shipment(self)
         self.order = Order(self)
+        self.stock = Stock(self)
 
     def set_user_agent_component(self, key, value, sanitize=True):
         """Add or replace new user-agent component strings.
 
-        Given strings are formatted along the format agreed upon by Mollie and implementers:
+        Given strings are formatted along the format agreed upon by eWarehousing and implementers:
         - key and values are separated by a forward slash ("/").
         - multiple key/values are separated by a space.
         - keys are camel-cased, and cannot contain spaces.
@@ -62,24 +66,19 @@ class EwhsClient:
 
         self._authenticate()
 
-        auth = HTTPBasicAuth(self.username, self.password)
-
         request = Request(
             method=method,
             url=url,
             json=data,
             params=params,
-            auth=auth,
-            headers={
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "User-Agent": self.user_agent,
-                "X-Ewhs-Client-Info": self.UNAME,
-            },
+            headers=dict(self._get_default_headers(), **{"Authorization": "Bearer {}".format(self.access_token)}),
         )
 
         prepped = self.session.prepare_request(request=request)
         response = self.session.send(prepped)
+
+        if response.status_code == 401:
+            raise AuthenticationError(response.json())
 
         if response.status_code == 400:
             raise BadRequest()
@@ -92,6 +91,55 @@ class EwhsClient:
 
         return response.json()
 
+    def _authenticate(self):
+        if not self.access_token or int(time.time()) > self.expires_at:
+            self.request_access_token()
+
+    def request_access_token(self):
+        if not self.refresh_token:
+            return self.request_refresh_token()
+
+        self._send_auth(
+            "auth/refresh",
+            {"refresh_token": self.refresh_token},
+        )
+
+    def request_refresh_token(self):
+        self._send_auth(
+            "auth/login",
+            {
+                "username": self.username,
+                "password": self.password
+            },
+        )
+
+    def _send_auth(self, url, post_data):
+        request = Request(
+            method="POST",
+            url='{}/{}'.format(self._url, url),
+            json=post_data,
+            headers=self._get_default_headers(),
+        )
+
+        prepped = self.session.prepare_request(request=request)
+        response = self.session.send(prepped)
+        data = response.json()
+
+        if response.status_code != 200:
+            raise AuthenticationError(data["message"])
+
+        self.refresh_token = data["refresh_token"]
+        self.access_token = data["token"]
+        self.expires_at = data["expires_at"]
+
+    def _get_default_headers(self):
+        return {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "User-Agent": self.user_agent,
+            "X-Ewhs-Client-Info": self.UNAME,
+        }
+
     def filter(self, resource, params=None, **kwargs):
         return self._send('GET', resource, params=params, **kwargs)
 
@@ -99,14 +147,10 @@ class EwhsClient:
         return self._send('POST', resource, data=data, **kwargs)
 
     def update(self, resource, resource_id, data, **kwargs):
-        return self._send('PUT', resource, resource_id, data=data, **kwargs)
+        return self._send('PATCH', resource, resource_id, data=data, **kwargs)
 
     def delete(self, resource, resource_id, **kwargs):
         return self._send('DELETE', resource, resource_id, **kwargs)
 
     def get(self, resource, resource_id, **kwargs):
         return self._send('GET', resource, resource_id, **kwargs)
-
-    def _authenticate(self):
-        # to implement
-        pass

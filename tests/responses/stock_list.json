@@ -1,0 +1,42 @@
+[
+    {
+        "id": "f2894c16-399e-4ca1-9151-489775a6519c",
+        "article_code": "SHRT-R",
+        "ean": "8785073983111",
+        "stock_physical": 1,
+        "stock_salable": 1,
+        "stock_available": 0,
+        "stock_quarantaine": 0,
+        "stock_plannable": 0
+    },
+    {
+        "id": "f2894c16-399e-4ca1-9151-489775a6519d",
+        "article_code": "SNPBCK",
+        "ean": "8785056370398",
+        "stock_physical": 0,
+        "stock_salable": 0,
+        "stock_available": 0,
+        "stock_quarantaine": 0,
+        "stock_plannable": 0
+    },
+    {
+        "id": "f2894c16-399e-4ca1-9151-489775a6519d",
+        "article_code": "JCK-X",
+        "ean": null,
+        "stock_physical": 0,
+        "stock_salable": -1,
+        "stock_available": -1,
+        "stock_quarantaine": 0,
+        "stock_plannable": 0
+    },
+    {
+        "id": "f2894c16-399e-4ca1-9151-489775a6519d",
+        "article_code": "SHO-Y",
+        "ean": "8717418510749",
+        "stock_physical": 0,
+        "stock_salable": 15,
+        "stock_available": 15,
+        "stock_quarantaine": 0,
+        "stock_plannable": 0
+    }
+]

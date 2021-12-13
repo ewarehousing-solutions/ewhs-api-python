@@ -17,7 +17,7 @@ pip install ewhs-api-python
 
 ### Requirements
 
-- Python 3.7+
+- Python 3.6+
 
 ## Usage
 
@@ -60,7 +60,7 @@ poetry install
 Running tests
 
 ```shell
-poetry run pytests
+poetry run pytest
 ```
 
 # Support
