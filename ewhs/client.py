@@ -147,7 +147,7 @@ class EwhsClient:
         return self._send('POST', resource, data=data, **kwargs)
 
     def update(self, resource, resource_id, data, **kwargs):
-        return self._send('PUT', resource, resource_id, data=data, **kwargs)
+        return self._send('PATCH', resource, resource_id, data=data, **kwargs)
 
     def delete(self, resource, resource_id, **kwargs):
         return self._send('DELETE', resource, resource_id, **kwargs)

@@ -88,3 +88,46 @@ def test_create_order(authenticated_client, response):
     order = authenticated_client.order.create(data)
     assert isinstance(order, dict)
     assert order['id'] == ORDER_ID
+
+
+def test_update_order(authenticated_client, response):
+    """Update an order."""
+    response.patch("https://api.ewarehousing.com/api/orders/94dbdb91-87ac-4634-b77d-e126a6206b15", "order_single")
+
+    data = {
+        "note": "Testorder",
+        "customer": "53b5a543-129a-403c-9a6e-3d9c525ffa5b",
+        "order_lines": [
+            {
+                "quantity": 7,
+                "description": "Voorbeeldproduct-B",
+                "variant": "default_variant_b_id"
+            },
+            {
+                "quantity": 15,
+                "description": "Voorbeeldproduct-A",
+                "variant": "default_variant_a_id"
+            }
+        ],
+        "shipping_email": "test@ewarehousing.nl",
+        "shipping_method": None,
+        "shipping_address": {
+            "city": "Heinenoord",
+            "state": "ZH",
+            "street": "Nijverheidsweg",
+            "country": "NL",
+            "street2": None,
+            "zipcode": "3274 KJ",
+            "fax_number": None,
+            "addressed_to": None,
+            "phone_number": "0186 612 267",
+            "mobile_number": "",
+            "street_number": 27,
+            "street_number_addition": ""
+        },
+        "external_reference": "ORD001",
+        "requested_delivery_date": "2018-11-19"
+    }
+    order = authenticated_client.order.update(ORDER_ID, data)
+    assert isinstance(order, dict)
+    assert order['id'] == ORDER_ID
