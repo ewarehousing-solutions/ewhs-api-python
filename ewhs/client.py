@@ -60,7 +60,7 @@ class EwhsClient:
         return " ".join(components)
 
     def _send(self, method, resource, resource_id=None, data=None, params=None, **kwargs):
-        url = '{}/api/{}'.format(self._url, resource)
+        url = '{}/wms/{}'.format(self._url, resource)
 
         if resource_id is not None:
             url = '{}/{}'.format(url, resource_id)

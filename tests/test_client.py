@@ -11,7 +11,7 @@ def test_client_default_user_agent(client, response):
     assert re.match(regex, client.user_agent)
 
     # perform a request and inspect the actual used headers
-    response.get("https://api.ewarehousing.com/api/orders", "order_list")
+    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
     response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
     client.order.list()
     request = response.calls[0].request
@@ -25,7 +25,7 @@ def test_client_auth(client, response):
 
     response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
     response.post("https://api.ewarehousing.com/wms/auth/refresh", "auth_login_refresh")
-    response.get("https://api.ewarehousing.com/api/orders", "order_list")
+    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
 
     client.order.list()
 
@@ -47,7 +47,7 @@ def test_client_see_customer_and_wms_code_headers(client, response):
 
     # perform a request and inspect the actual used headers
     response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
-    response.get("https://api.ewarehousing.com/api/orders", "order_list")
+    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
 
     client.order.list()
     request = response.calls[1].request

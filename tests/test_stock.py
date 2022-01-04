@@ -1,6 +1,6 @@
 def test_list_stock_levels(authenticated_client, response):
     """Retrieve a list of stock levels"""
-    response.get(f"https://api.ewarehousing.com/api/stock", "stock_list")
+    response.get(f"https://api.ewarehousing.com/wms/stock", "stock_list")
 
     stock = authenticated_client.stock.list()
     assert isinstance(stock, list)
