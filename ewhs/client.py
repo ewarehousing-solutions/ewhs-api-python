@@ -131,7 +131,7 @@ class EwhsClient:
 
         self.refresh_token = data["refresh_token"]
         self.access_token = data["token"]
-        self.expires_at = data["expires_at"]
+        self.expires_at = data["exp"]
 
     def _get_default_headers(self):
         return {
