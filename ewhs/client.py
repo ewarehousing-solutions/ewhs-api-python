@@ -12,7 +12,7 @@ class EwhsClient:
     UNAME = " ".join(platform.uname())
     CLIENT_VERSION = "0.1.0"
 
-    API_URL = "https://api.ewarehousing.com/api"
+    API_URL = "https://api.ewarehousing.com"
 
     def __init__(self, username, password, customer_id, api_url=None):
         self.session = Session()
@@ -59,7 +59,7 @@ class EwhsClient:
         return " ".join(components)
 
     def _send(self, method, resource, resource_id=None, data=None, params=None, **kwargs):
-        url = '{}/{}'.format(self._url, resource)
+        url = '{}/api/{}'.format(self._url, resource)
 
         if resource_id is not None:
             url = '{}/{}'.format(url, resource_id)

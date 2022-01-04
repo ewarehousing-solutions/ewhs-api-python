@@ -11,7 +11,7 @@ def test_client_default_user_agent(client, response):
 
     # perform a request and inspect the actual used headers
     response.get("https://api.ewarehousing.com/api/orders", "order_list")
-    response.post("https://api.ewarehousing.com/api/wms/auth/login", "auth_login")
+    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
     client.order.list()
     request = response.calls[0].request
     assert re.match(regex, request.headers["User-Agent"])
@@ -22,8 +22,8 @@ def test_client_auth(client, response):
     assert client.refresh_token is None
     assert client.expires_at is 0
 
-    response.post("https://api.ewarehousing.com/api/wms/auth/login", "auth_login")
-    response.post("https://api.ewarehousing.com/api/wms/auth/refresh", "auth_login_refresh")
+    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
+    response.post("https://api.ewarehousing.com/wms/auth/refresh", "auth_login_refresh")
     response.get("https://api.ewarehousing.com/api/orders", "order_list")
 
     client.order.list()
@@ -45,7 +45,7 @@ def test_invalid_auth(client, response):
     assert client.refresh_token is None
     assert client.expires_at is 0
 
-    response.post("https://api.ewarehousing.com/api/wms/auth/login", "auth_login_error", status=401)
+    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login_error", status=401)
 
     with pytest.raises(AuthenticationError):
         client.order.list()
