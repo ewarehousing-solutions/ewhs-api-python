@@ -100,13 +100,13 @@ class EwhsClient:
             return self.request_refresh_token()
 
         self._send_auth(
-            "auth/refresh",
+            "wms/auth/refresh",
             {"refresh_token": self.refresh_token},
         )
 
     def request_refresh_token(self):
         self._send_auth(
-            "auth/login",
+            "wms/auth/login",
             {
                 "username": self.username,
                 "password": self.password
