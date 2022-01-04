@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ewhs-api-python"
-version = "1.0.0-beta.8"
+version = "1.0.0-beta.7"
 description = "Python library for the eWarehousing Solutions API."
 authors = ["Liam Boer <liam.boer@notive.nl>", "Henny Krijnen <hennykrijnen@ewarehousing-solutions.nl>"]
 packages = [
