@@ -6,7 +6,7 @@ from ewhs.client import EwhsClient
 
 @pytest.fixture(scope="function")
 def client():
-    client = EwhsClient("test", "testpassword", "9fc05c82-0552-4ca5-b588-c64d77f117a9")
+    client = EwhsClient("test", "testpassword", "9fc05c82-0552-4ca5-b588-c64d77f117a9", "ewhs")
     return client
 
 

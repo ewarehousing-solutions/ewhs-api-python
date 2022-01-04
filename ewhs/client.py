@@ -14,12 +14,13 @@ class EwhsClient:
 
     API_URL = "https://api.ewarehousing.com"
 
-    def __init__(self, username, password, customer_id, api_url=None):
+    def __init__(self, username, password, customer_code=None, wms_code=None, api_url=None):
         self.session = Session()
 
         self.username = username
         self.password = password
-        self.customer_id = customer_id
+        self.customer_code = customer_code
+        self.wms_code = wms_code
         self.access_token = None
         self.refresh_token = None
         self.expires_at = 0
@@ -71,7 +72,7 @@ class EwhsClient:
             url=url,
             json=data,
             params=params,
-            headers=dict(self._get_default_headers(), **{"Authorization": "Bearer {}".format(self.access_token)}),
+            headers=dict(self._get_headers(), **{"Authorization": "Bearer {}".format(self.access_token)}),
         )
 
         prepped = self.session.prepare_request(request=request)
@@ -118,7 +119,7 @@ class EwhsClient:
             method="POST",
             url='{}/{}'.format(self._url, url),
             json=post_data,
-            headers=self._get_default_headers(),
+            headers=self._get_headers(),
         )
 
         prepped = self.session.prepare_request(request=request)
@@ -139,6 +140,17 @@ class EwhsClient:
             "User-Agent": self.user_agent,
             "X-Ewhs-Client-Info": self.UNAME,
         }
+
+    def _get_headers(self):
+        headers = self._get_default_headers()
+
+        if self.customer_code:
+            headers["X-Customer-Code"] = self.customer_code
+
+        if self.wms_code:
+            headers["X-Wms-Code"] = self.wms_code
+
+        return headers
 
     def filter(self, resource, params=None, **kwargs):
         return self._send('GET', resource, params=params, **kwargs)
