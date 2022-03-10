@@ -72,8 +72,9 @@ class EwhsClient:
         self._authenticate()
 
         headers = dict(self._get_headers(), **{"Authorization": "Bearer {}".format(self.access_token)})
-        if expand:
-            headers['Expand'] = expand
+
+        if expand and len(expand):
+            headers['Expand'] = ','.join(expand)
 
         request = Request(
             method=method,

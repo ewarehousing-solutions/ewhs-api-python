@@ -55,6 +55,36 @@ def test_client_see_customer_and_wms_code_headers(client, response):
     assert request.headers["X-Wms-Code"] == "ewhs"
 
 
+def test_client_see_no_expand_header_when_no_expand_values_are_provided(client, response):
+    assert client.customer_code == "9fc05c82-0552-4ca5-b588-c64d77f117a9"
+    assert client.wms_code == "ewhs"
+
+    # perform a request and inspect the actual used headers
+    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
+    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
+
+    client.order.list()
+    request = response.calls[1].request
+    assert request.headers["X-Customer-Code"] == "9fc05c82-0552-4ca5-b588-c64d77f117a9"
+    assert request.headers["X-Wms-Code"] == "ewhs"
+    assert "Expand" not in request.headers
+
+
+def test_client_see_expand_header_when_expand_values_are_provided(client, response):
+    assert client.customer_code == "9fc05c82-0552-4ca5-b588-c64d77f117a9"
+    assert client.wms_code == "ewhs"
+
+    # perform a request and inspect the actual used headers
+    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
+    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
+
+    client.order.list(expand=["variant", "order_lines"])
+    request = response.calls[1].request
+    assert request.headers["X-Customer-Code"] == "9fc05c82-0552-4ca5-b588-c64d77f117a9"
+    assert request.headers["X-Wms-Code"] == "ewhs"
+    assert request.headers["Expand"] == "variant,order_lines"
+
+
 def test_invalid_auth(client, response):
     assert client.access_token is None
     assert client.refresh_token is None
