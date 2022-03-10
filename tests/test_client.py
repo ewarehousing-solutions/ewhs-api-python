@@ -11,8 +11,8 @@ def test_client_default_user_agent(client, response):
     assert re.match(regex, client.user_agent)
 
     # perform a request and inspect the actual used headers
-    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
-    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
+    response.get("https://api.ewarehousing.com/wms/orders/", "order_list")
+    response.post("https://api.ewarehousing.com/wms/auth/login/", "auth_login")
     client.order.list()
     request = response.calls[0].request
     assert re.match(regex, request.headers["User-Agent"])
@@ -23,9 +23,9 @@ def test_client_auth(client, response):
     assert client.refresh_token is None
     assert client.expires_at is 0
 
-    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
-    response.post("https://api.ewarehousing.com/wms/auth/refresh", "auth_login_refresh")
-    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
+    response.post("https://api.ewarehousing.com/wms/auth/login/", "auth_login")
+    response.post("https://api.ewarehousing.com/wms/auth/refresh/", "auth_login_refresh")
+    response.get("https://api.ewarehousing.com/wms/orders/", "order_list")
 
     client.order.list()
 
@@ -46,8 +46,8 @@ def test_client_see_customer_and_wms_code_headers(client, response):
     assert client.wms_code == "ewhs"
 
     # perform a request and inspect the actual used headers
-    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
-    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
+    response.post("https://api.ewarehousing.com/wms/auth/login/", "auth_login")
+    response.get("https://api.ewarehousing.com/wms/orders/", "order_list")
 
     client.order.list()
     request = response.calls[1].request
@@ -60,8 +60,8 @@ def test_client_see_no_expand_header_when_no_expand_values_are_provided(client, 
     assert client.wms_code == "ewhs"
 
     # perform a request and inspect the actual used headers
-    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
-    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
+    response.post("https://api.ewarehousing.com/wms/auth/login/", "auth_login")
+    response.get("https://api.ewarehousing.com/wms/orders/", "order_list")
 
     client.order.list()
     request = response.calls[1].request
@@ -75,8 +75,8 @@ def test_client_see_expand_header_when_expand_values_are_provided(client, respon
     assert client.wms_code == "ewhs"
 
     # perform a request and inspect the actual used headers
-    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login")
-    response.get("https://api.ewarehousing.com/wms/orders", "order_list")
+    response.post("https://api.ewarehousing.com/wms/auth/login/", "auth_login")
+    response.get("https://api.ewarehousing.com/wms/orders/", "order_list")
 
     client.order.list(expand=["variant", "order_lines"])
     request = response.calls[1].request
@@ -90,7 +90,7 @@ def test_invalid_auth(client, response):
     assert client.refresh_token is None
     assert client.expires_at is 0
 
-    response.post("https://api.ewarehousing.com/wms/auth/login", "auth_login_error", status=401)
+    response.post("https://api.ewarehousing.com/wms/auth/login/", "auth_login_error", status=401)
 
     with pytest.raises(AuthenticationError):
         client.order.list()

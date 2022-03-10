@@ -60,14 +60,10 @@ class EwhsClient:
         return " ".join(components)
 
     def _send(self, method, resource, resource_id=None, data=None, params=None, expand=None, **kwargs):
-        if self._url != self.API_URL:
-            url = '{}/wms/{}/'.format(self._url, resource)
-        else:
-            url = '{}/wms/{}'.format(self._url, resource)
+        url = 'wms/{}'.format(resource)
 
         if resource_id is not None:
-            prefix_url = '{}/wms/{}'.format(self._url, resource)
-            url = '{}/{}'.format(prefix_url, resource_id)
+            url = '{}/{}'.format(url, resource_id)
 
         self._authenticate()
 
@@ -78,7 +74,7 @@ class EwhsClient:
 
         request = Request(
             method=method,
-            url=url,
+            url=self._format_url(url),
             json=data,
             params=params,
             headers=headers,
@@ -109,10 +105,7 @@ class EwhsClient:
         if not self.refresh_token:
             return self.request_refresh_token()
 
-        if self._url != self.API_URL:
-            auth_url = "wms/auth/refresh/"
-        else:
-            auth_url = "wms/auth/refresh"
+        auth_url = "wms/auth/refresh/"
 
         self._send_auth(
             auth_url,
@@ -120,11 +113,7 @@ class EwhsClient:
         )
 
     def request_refresh_token(self):
-
-        if self._url != self.API_URL:
-            auth_url = "wms/auth/login/"
-        else:
-            auth_url = "wms/auth/login"
+        auth_url = "wms/auth/login/"
 
         self._send_auth(
             auth_url,
@@ -137,7 +126,7 @@ class EwhsClient:
     def _send_auth(self, url, post_data):
         request = Request(
             method="POST",
-            url='{}/{}'.format(self._url, url),
+            url=self._format_url(url),
             json=post_data,
             headers=self._get_headers(),
         )
@@ -171,6 +160,14 @@ class EwhsClient:
             headers["X-Wms-Code"] = self.wms_code
 
         return headers
+
+    def _format_url(self, url):
+        url = "{}/{}".format(self._url, url)
+
+        if not url.endswith("/"):
+            return url + "/"
+
+        return url
 
     def filter(self, resource, params=None, expand=None, **kwargs):
         return self._send('GET', resource, params=params, expand=expand, **kwargs)
