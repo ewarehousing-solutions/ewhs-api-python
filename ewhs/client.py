@@ -59,20 +59,25 @@ class EwhsClient:
         components = ["/".join(x) for x in self.user_agent_components.items()]
         return " ".join(components)
 
-    def _send(self, method, resource, resource_id=None, data=None, params=None, **kwargs):
-        url = '{}/wms/{}'.format(self._url, resource)
+    def _send(self, method, resource, resource_id=None, data=None, params=None, expand=None, **kwargs):
+        url = 'wms/{}'.format(resource)
 
         if resource_id is not None:
             url = '{}/{}'.format(url, resource_id)
 
         self._authenticate()
 
+        headers = dict(self._get_headers(), **{"Authorization": "Bearer {}".format(self.access_token)})
+
+        if expand and len(expand):
+            headers['Expand'] = ','.join(expand)
+
         request = Request(
             method=method,
-            url=url,
+            url=self._format_url(url),
             json=data,
             params=params,
-            headers=dict(self._get_headers(), **{"Authorization": "Bearer {}".format(self.access_token)}),
+            headers=headers,
         )
 
         prepped = self.session.prepare_request(request=request)
@@ -100,14 +105,18 @@ class EwhsClient:
         if not self.refresh_token:
             return self.request_refresh_token()
 
+        auth_url = "wms/auth/refresh/"
+
         self._send_auth(
-            "wms/auth/refresh",
+            auth_url,
             {"refresh_token": self.refresh_token},
         )
 
     def request_refresh_token(self):
+        auth_url = "wms/auth/login/"
+
         self._send_auth(
-            "wms/auth/login",
+            auth_url,
             {
                 "username": self.username,
                 "password": self.password
@@ -117,7 +126,7 @@ class EwhsClient:
     def _send_auth(self, url, post_data):
         request = Request(
             method="POST",
-            url='{}/{}'.format(self._url, url),
+            url=self._format_url(url),
             json=post_data,
             headers=self._get_headers(),
         )
@@ -152,17 +161,25 @@ class EwhsClient:
 
         return headers
 
-    def filter(self, resource, params=None, **kwargs):
-        return self._send('GET', resource, params=params, **kwargs)
+    def _format_url(self, url):
+        url = "{}/{}".format(self._url, url)
 
-    def create(self, resource, data, **kwargs):
-        return self._send('POST', resource, data=data, **kwargs)
+        if not url.endswith("/"):
+            return url + "/"
 
-    def update(self, resource, resource_id, data, **kwargs):
-        return self._send('PATCH', resource, resource_id, data=data, **kwargs)
+        return url
 
-    def delete(self, resource, resource_id, **kwargs):
-        return self._send('DELETE', resource, resource_id, **kwargs)
+    def filter(self, resource, params=None, expand=None, **kwargs):
+        return self._send('GET', resource, params=params, expand=expand, **kwargs)
 
-    def get(self, resource, resource_id, **kwargs):
-        return self._send('GET', resource, resource_id, **kwargs)
+    def create(self, resource, data, expand=None, **kwargs):
+        return self._send('POST', resource, data=data, expand=expand, **kwargs)
+
+    def update(self, resource, resource_id, data, expand=None, **kwargs):
+        return self._send('PATCH', resource, resource_id, data=data, expand=expand, **kwargs)
+
+    def delete(self, resource, resource_id, expand=None, **kwargs):
+        return self._send('DELETE', resource, resource_id, expand=expand, **kwargs)
+
+    def get(self, resource, resource_id, expand=None, **kwargs):
+        return self._send('GET', resource, resource_id, expand=expand, **kwargs)

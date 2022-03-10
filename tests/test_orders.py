@@ -3,7 +3,7 @@ ORDER_ID = "94dbdb91-87ac-4634-b77d-e126a6206b15"
 
 def test_get_order(authenticated_client, response):
     """Retrieve a single order by order ID."""
-    response.get(f"https://api.ewarehousing.com/wms/orders/{ORDER_ID}", "order_single")
+    response.get(f"https://api.ewarehousing.com/wms/orders/{ORDER_ID}/", "order_single")
 
     order = authenticated_client.order.get(ORDER_ID)
     assert isinstance(order, dict)
@@ -17,7 +17,7 @@ def test_get_order(authenticated_client, response):
 
 def test_list_orders(authenticated_client, response):
     """Retrieve a list of orders"""
-    response.get(f"https://api.ewarehousing.com/wms/orders", "order_list")
+    response.get(f"https://api.ewarehousing.com/wms/orders/", "order_list")
 
     orders = authenticated_client.order.list()
     assert isinstance(orders, list)
@@ -38,7 +38,7 @@ def test_list_orders(authenticated_client, response):
 
 def test_filer_orders(authenticated_client, response):
     """Retrieve a list of orders"""
-    response.get(f"https://api.ewarehousing.com/wms/orders?status=created", "order_list")
+    response.get(f"https://api.ewarehousing.com/wms/orders/?status=created", "order_list")
 
     orders = authenticated_client.order.list(
         params={'status': 'created'}
@@ -49,7 +49,7 @@ def test_filer_orders(authenticated_client, response):
 
 def test_create_order(authenticated_client, response):
     """Create an order."""
-    response.post(f"https://api.ewarehousing.com/wms/orders", "order_single")
+    response.post(f"https://api.ewarehousing.com/wms/orders/", "order_single")
 
     data = {
         "note": "Testorder",
@@ -92,7 +92,7 @@ def test_create_order(authenticated_client, response):
 
 def test_update_order(authenticated_client, response):
     """Update an order."""
-    response.patch("https://api.ewarehousing.com/wms/orders/94dbdb91-87ac-4634-b77d-e126a6206b15", "order_single")
+    response.patch("https://api.ewarehousing.com/wms/orders/94dbdb91-87ac-4634-b77d-e126a6206b15/", "order_single")
 
     data = {
         "note": "Testorder",
