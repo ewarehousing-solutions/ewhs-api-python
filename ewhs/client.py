@@ -10,9 +10,9 @@ from .exceptions import ServerError, BadRequest, AuthenticationError
 
 class EwhsClient:
     UNAME = " ".join(platform.uname())
-    CLIENT_VERSION = "0.1.0"
+    CLIENT_VERSION = "0.1.1"
 
-    API_URL = "https://api.ewarehousing.com"
+    API_URL = "https://eu.middleware.ewarehousing-solutions.com"
 
     def __init__(self, username, password, customer_code=None, wms_code=None, api_url=None):
         self.session = Session()
