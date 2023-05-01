@@ -9,9 +9,7 @@ language.
 
 ## Documentation
 
--- Work in progress --
-
-Api documentation: https://documenter.getpostman.com/view/19192450/UVeNn35H
+https://api.docs.ewarehousing-solutions.com/
 
 
 ## Installation
