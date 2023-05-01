@@ -4,7 +4,7 @@ import time
 from collections import OrderedDict
 
 from requests import Request, Session
-from .resources import Order, Shipment, Stock
+from .resources import Order, Article, Webhook, Shipment, Stock
 from .exceptions import ServerError, BadRequest, AuthenticationError
 
 
@@ -34,6 +34,8 @@ class EwhsClient:
         # initialize resources
         self.shipment = Shipment(self)
         self.order = Order(self)
+        self.article = Article(self)
+        self.webhook = Webhook(self)
         self.stock = Stock(self)
 
     def set_user_agent_component(self, key, value, sanitize=True):
@@ -61,6 +63,9 @@ class EwhsClient:
 
     def _send(self, method, resource, resource_id=None, data=None, params=None, expand=None, **kwargs):
         url = 'wms/{}'.format(resource)
+
+        if resource == 'webhooks':
+            url = resource
 
         if resource_id is not None:
             url = '{}/{}'.format(url, resource_id)

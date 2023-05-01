@@ -1,0 +1,21 @@
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": "6caeff6d-cd72-4fde-9d02-0704514ad917",
+            "url": "https://webhook.site/d8cfed29-d64c-41e6-82fe-f4919992b7a8",
+            "group": "stock",
+            "action": "updated",
+            "customer": "be62c27e-2aac-4ac1-902e-f770d64f8dce"
+        },
+        {
+            "id": "ac954ac8-4182-4dc5-b951-f570dc145fe4",
+            "url": "https://webhook.site/d8cfed29-d64c-41e6-82fe-f4919992b7a8",
+            "group": "order",
+            "action": "updated",
+            "customer": "be62c27e-2aac-4ac1-902e-f770d64f8dce"
+        }
+    ]
+}

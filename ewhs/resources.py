@@ -28,5 +28,13 @@ class Order(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, UpdateR
     resource = 'orders'
 
 
+class Article(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, UpdateResourceMixin, Resource):
+    resource = 'articles'
+
+
+class Webhook(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, UpdateResourceMixin, Resource):
+    resource = 'webhooks'
+
+
 class Stock(ListResourceMixin, Resource):
     resource = 'stock'

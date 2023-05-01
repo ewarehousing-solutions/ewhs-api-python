@@ -1,0 +1,50 @@
+[
+    {
+        "id": "bb275439-1e18-490f-85f5-d26c6cf93ca8",
+        "name": "T-shirt",
+        "customer": "be62c27e-2aac-4ac1-902e-f770d64f8dce",
+        "variants": [
+            {
+                "id": "b80e4926-a6ba-4686-91ca-0b5b1c6933a2",
+                "article_code": "VBTS_001",
+                "name": "Blauw",
+                "description": "T-shirt - Blauw",
+                "ean": "8710400311141",
+                "sku": "VBTS_001",
+                "hs_tariff_code": "54353453",
+                "height": null,
+                "depth": 0,
+                "width": 100,
+                "weight": null,
+                "expirable": false,
+                "country_of_origin": null,
+                "using_serial_numbers": false,
+                "value": 0.0
+            }
+        ]
+    },
+    {
+        "id": "295c3cc4-5899-486f-9c9c-9a6b1025c998",
+        "name": "Broek",
+        "customer": "be62c27e-2aac-4ac1-902e-f770d64f8dce",
+        "variants": [
+            {
+                "id": "cdb36dc6-c8e5-4ee4-afd9-fc0caa801bb3",
+                "article_code": "VBB_001",
+                "name": "Zwart",
+                "description": "Broek - Zwart",
+                "ean": "8710400311144",
+                "sku": null,
+                "hs_tariff_code": "54353454",
+                "height": 10,
+                "depth": null,
+                "width": null,
+                "weight": null,
+                "expirable": false,
+                "country_of_origin": null,
+                "using_serial_numbers": false,
+                "value": null
+            }
+        ]
+    }
+]
