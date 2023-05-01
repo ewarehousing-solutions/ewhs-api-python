@@ -28,7 +28,7 @@ class Order(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, UpdateR
     resource = 'orders'
 
 
-class Product(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, UpdateResourceMixin, Resource):
+class Article(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, UpdateResourceMixin, Resource):
     resource = 'articles'
 
 

@@ -4,7 +4,7 @@ import time
 from collections import OrderedDict
 
 from requests import Request, Session
-from .resources import Order, Product, Webhook, Shipment, Stock
+from .resources import Order, Article, Webhook, Shipment, Stock
 from .exceptions import ServerError, BadRequest, AuthenticationError
 
 
@@ -34,7 +34,7 @@ class EwhsClient:
         # initialize resources
         self.shipment = Shipment(self)
         self.order = Order(self)
-        self.product = Product(self)
+        self.article = Article(self)
         self.webhook = Webhook(self)
         self.stock = Stock(self)
 
