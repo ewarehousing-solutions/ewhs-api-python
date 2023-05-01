@@ -1,6 +1,6 @@
 def test_list_webhooks(authenticated_client, response):
     """Retrieve a list of webhooks"""
-    response.get(f"https://api.ewarehousing.com/webhooks/", "webhook_list")
+    response.get(f"https://eu.middleware.ewarehousing-solutions.com/webhooks/", "webhook_list")
 
     webhooks = authenticated_client.webhook.list()
     assert isinstance(webhooks, dict)

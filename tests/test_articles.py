@@ -1,6 +1,6 @@
 def test_list_articles(authenticated_client, response):
     """Retrieve a list of articles"""
-    response.get(f"https://api.ewarehousing.com/wms/articles/", "article_list")
+    response.get(f"https://eu.middleware.ewarehousing-solutions.com/wms/articles/", "article_list")
 
     articles = authenticated_client.article.list()
 
