@@ -5,7 +5,7 @@ from collections import OrderedDict
 
 from requests import Request, Session
 from .resources import Order, Article, Webhook, Shipment, Stock
-from .exceptions import ServerError, BadRequest, AuthenticationError
+from .exceptions import ServerError, BadRequest, AuthenticationError, ApiLimitReached
 
 
 class EwhsClient:
@@ -93,6 +93,9 @@ class EwhsClient:
 
         if response.status_code == 400:
             raise BadRequest()
+
+        if response.status_code == 429:
+            raise ApiLimitReached()
 
         if response.status_code == 500:
             raise ServerError()
