@@ -3,7 +3,9 @@ class EwhsError(Exception):
 
 
 class BadRequest(EwhsError):
-    pass
+    def __init__(self, errors=None, *args):
+        self.errors = errors
+        super().__init__(*args)
 
 
 class AuthenticationError(EwhsError):

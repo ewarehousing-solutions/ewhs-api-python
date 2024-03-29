@@ -92,7 +92,7 @@ class EwhsClient:
             raise AuthenticationError(response.json())
 
         if response.status_code == 400:
-            raise BadRequest()
+            raise BadRequest(errors=response.json())
 
         if response.status_code == 429:
             raise ApiLimitReached()
