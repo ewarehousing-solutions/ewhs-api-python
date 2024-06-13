@@ -38,3 +38,7 @@ class Webhook(ListResourceMixin, DetailResourceMixin, CreateResourceMixin, Updat
 
 class Stock(ListResourceMixin, Resource):
     resource = 'stock'
+
+
+class ShippingMethod(ListResourceMixin, DetailResourceMixin, Resource):
+    resource = 'shippingmethods'

@@ -4,7 +4,7 @@ import time
 from collections import OrderedDict
 
 from requests import Request, Session
-from .resources import Order, Article, Webhook, Shipment, Stock
+from .resources import Order, Article, Webhook, Shipment, Stock, ShippingMethod
 from .exceptions import ServerError, BadRequest, AuthenticationError, ApiLimitReached
 
 
@@ -37,6 +37,7 @@ class EwhsClient:
         self.article = Article(self)
         self.webhook = Webhook(self)
         self.stock = Stock(self)
+        self.shipping_methods = ShippingMethod(self)
 
     def set_user_agent_component(self, key, value, sanitize=True):
         """Add or replace new user-agent component strings.

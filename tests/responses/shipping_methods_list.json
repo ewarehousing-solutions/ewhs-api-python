@@ -1,0 +1,10 @@
+[
+    {
+        "id": "1ef28ca7-8437-65a4-a768-63d61c99510d",
+        "shipper": "Bol",
+        "shipper_code": "bol",
+        "code": "VVB",
+        "description": "Verzenden via Bol.com",
+        "shipping_software": "vvb"
+    }
+]
